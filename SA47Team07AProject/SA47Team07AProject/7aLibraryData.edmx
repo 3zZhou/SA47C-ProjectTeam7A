@@ -1,0 +1,710 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SA47Team07ALibraryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Books">
+          <Key>
+            <PropertyRef Name="BookID" />
+          </Key>
+          <Property Name="BookID" Type="int" Nullable="false" />
+          <Property Name="BookName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Publisher" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="YearOfPublication" Type="date" Nullable="false" />
+          <Property Name="Author" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Language" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="BookType" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Genre" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="LocationNo" Type="nvarchar" MaxLength="4" Nullable="false" />
+          <Property Name="TotalStock" Type="smallint" Nullable="false" />
+          <Property Name="NoOfBorrowBooks" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Locations">
+          <Key>
+            <PropertyRef Name="LocationNo" />
+          </Key>
+          <Property Name="LocationNo" Type="nvarchar" MaxLength="4" Nullable="false" />
+          <Property Name="LocationDescription" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MemberCategories">
+          <Key>
+            <PropertyRef Name="MemberCategory" />
+          </Key>
+          <Property Name="MemberCategory" Type="nvarchar" MaxLength="1" Nullable="false" />
+          <Property Name="BorrowLimit" Type="smallint" Nullable="false" />
+          <Property Name="BorrowedBooks" Type="smallint" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Members">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="MemberID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MemberName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IDNo" Type="nvarchar" MaxLength="9" Nullable="false" />
+          <Property Name="MemberCategory" Type="nvarchar" MaxLength="1" Nullable="false" />
+          <Property Name="DateOfBirth" Type="date" Nullable="false" />
+          <Property Name="PhoneNo" Type="nvarchar" MaxLength="8" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" />
+          <Property Name="Email" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="TotalBorrowBooks" Type="smallint" Nullable="false" />
+          <Property Name="CurrentBorrowBooks" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="StaffID" />
+          </Key>
+          <Property Name="StaffID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StaffName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="StaffDesignation" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="ContactNo" Type="nvarchar" MaxLength="8" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Transactions">
+          <Key>
+            <PropertyRef Name="RecordID" />
+          </Key>
+          <Property Name="RecordID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="StaffID" Type="int" Nullable="false" />
+          <Property Name="BookID" Type="int" Nullable="false" />
+          <Property Name="BorrowDate" Type="date" Nullable="false" />
+          <Property Name="DueDate" Type="date" Nullable="false" />
+          <Property Name="ReturnDate" Type="date" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SA47Team07ALibrary.dbo.ListOfBooksOnLoan' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ListOfBooksOnLoan">
+          <Key>
+            <PropertyRef Name="BookID" />
+            <PropertyRef Name="BookName" />
+            <PropertyRef Name="MemberID" />
+            <PropertyRef Name="MemberName" />
+            <PropertyRef Name="RecordID" />
+            <PropertyRef Name="BorrowDate" />
+            <PropertyRef Name="DueDate" />
+            <PropertyRef Name="Status" />
+          </Key>
+          <Property Name="BookID" Type="int" Nullable="false" />
+          <Property Name="BookName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="MemberName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RecordID" Type="int" Nullable="false" />
+          <Property Name="BorrowDate" Type="date" Nullable="false" />
+          <Property Name="DueDate" Type="date" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="3" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SA47Team07ALibrary.dbo.ManagementView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ManagementView">
+          <Key>
+            <PropertyRef Name="BookID" />
+            <PropertyRef Name="BookName" />
+            <PropertyRef Name="RecordID" />
+            <PropertyRef Name="Status" />
+          </Key>
+          <Property Name="BookID" Type="int" Nullable="false" />
+          <Property Name="BookName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RecordID" Type="int" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="3" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SA47Team07ALibrary.dbo.MemberListView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="MemberListView">
+          <Key>
+            <PropertyRef Name="MemberID" />
+            <PropertyRef Name="MemberName" />
+            <PropertyRef Name="MemberCategory" />
+            <PropertyRef Name="CategoryName" />
+            <PropertyRef Name="TotalBorrowBooks" />
+            <PropertyRef Name="CurrentBorrowBooks" />
+          </Key>
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="MemberName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MemberCategory" Type="nvarchar" MaxLength="1" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="TotalBorrowBooks" Type="smallint" Nullable="false" />
+          <Property Name="CurrentBorrowBooks" Type="smallint" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SA47Team07ALibrary.dbo.ReceiptView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ReceiptView">
+          <Key>
+            <PropertyRef Name="BookID" />
+            <PropertyRef Name="MemberName" />
+            <PropertyRef Name="RecordID" />
+            <PropertyRef Name="MemberID" />
+            <PropertyRef Name="BookName" />
+            <PropertyRef Name="BorrowDate" />
+            <PropertyRef Name="DueDate" />
+            <PropertyRef Name="CategoryName" />
+            <PropertyRef Name="MemberCategory" />
+            <PropertyRef Name="Status" />
+            <PropertyRef Name="ReturnDate" />
+          </Key>
+          <Property Name="BookID" Type="int" Nullable="false" />
+          <Property Name="MemberName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RecordID" Type="int" Nullable="false" />
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="BookName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="BorrowDate" Type="date" Nullable="false" />
+          <Property Name="DueDate" Type="date" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="MemberCategory" Type="nvarchar" MaxLength="1" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="ReturnDate" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Books_Locations">
+          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
+          <End Role="Books" Type="Self.Books" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="LocationNo" />
+            </Principal>
+            <Dependent Role="Books">
+              <PropertyRef Name="LocationNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Members1_MemberCategories">
+          <End Role="MemberCategories" Type="Self.MemberCategories" Multiplicity="1" />
+          <End Role="Members" Type="Self.Members" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberCategories">
+              <PropertyRef Name="MemberCategory" />
+            </Principal>
+            <Dependent Role="Members">
+              <PropertyRef Name="MemberCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transactions_Books">
+          <End Role="Books" Type="Self.Books" Multiplicity="1" />
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Books">
+              <PropertyRef Name="BookID" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="BookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transactions_Members">
+          <End Role="Members" Type="Self.Members" Multiplicity="1" />
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transactions_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="StaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SA47Team07ALibraryModelStoreContainer">
+          <EntitySet Name="Books" EntityType="Self.Books" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MemberCategories" EntityType="Self.MemberCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Members" EntityType="Self.Members" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ListOfBooksOnLoan" EntityType="Self.ListOfBooksOnLoan" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ListOfBooksOnLoan].[BookID] AS [BookID], 
+    [ListOfBooksOnLoan].[BookName] AS [BookName], 
+    [ListOfBooksOnLoan].[MemberID] AS [MemberID], 
+    [ListOfBooksOnLoan].[MemberName] AS [MemberName], 
+    [ListOfBooksOnLoan].[RecordID] AS [RecordID], 
+    [ListOfBooksOnLoan].[BorrowDate] AS [BorrowDate], 
+    [ListOfBooksOnLoan].[DueDate] AS [DueDate], 
+    [ListOfBooksOnLoan].[Status] AS [Status]
+    FROM [dbo].[ListOfBooksOnLoan] AS [ListOfBooksOnLoan]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ManagementView" EntityType="Self.ManagementView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ManagementView].[BookID] AS [BookID], 
+    [ManagementView].[BookName] AS [BookName], 
+    [ManagementView].[RecordID] AS [RecordID], 
+    [ManagementView].[Status] AS [Status]
+    FROM [dbo].[ManagementView] AS [ManagementView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="MemberListView" EntityType="Self.MemberListView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [MemberListView].[MemberID] AS [MemberID], 
+    [MemberListView].[MemberName] AS [MemberName], 
+    [MemberListView].[MemberCategory] AS [MemberCategory], 
+    [MemberListView].[CategoryName] AS [CategoryName], 
+    [MemberListView].[TotalBorrowBooks] AS [TotalBorrowBooks], 
+    [MemberListView].[CurrentBorrowBooks] AS [CurrentBorrowBooks]
+    FROM [dbo].[MemberListView] AS [MemberListView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ReceiptView" EntityType="Self.ReceiptView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ReceiptView].[BookID] AS [BookID], 
+    [ReceiptView].[MemberName] AS [MemberName], 
+    [ReceiptView].[RecordID] AS [RecordID], 
+    [ReceiptView].[MemberID] AS [MemberID], 
+    [ReceiptView].[BookName] AS [BookName], 
+    [ReceiptView].[BorrowDate] AS [BorrowDate], 
+    [ReceiptView].[DueDate] AS [DueDate], 
+    [ReceiptView].[CategoryName] AS [CategoryName], 
+    [ReceiptView].[MemberCategory] AS [MemberCategory], 
+    [ReceiptView].[Status] AS [Status], 
+    [ReceiptView].[ReturnDate] AS [ReturnDate]
+    FROM [dbo].[ReceiptView] AS [ReceiptView]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Books_Locations" Association="Self.FK_Books_Locations">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="Books" EntitySet="Books" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Members1_MemberCategories" Association="Self.FK_Members1_MemberCategories">
+            <End Role="MemberCategories" EntitySet="MemberCategories" />
+            <End Role="Members" EntitySet="Members" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transactions_Books" Association="Self.FK_Transactions_Books">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transactions_Members" Association="Self.FK_Transactions_Members">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transactions_Staff" Association="Self.FK_Transactions_Staff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SA47Team07ALibraryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="BookID" />
+          </Key>
+          <Property Name="BookID" Type="Int32" Nullable="false" />
+          <Property Name="BookName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Publisher" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="YearOfPublication" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Author" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Language" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BookType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Genre" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LocationNo" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TotalStock" Type="Int16" Nullable="false" />
+          <Property Name="NoOfBorrowBooks" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Location" Relationship="Self.FK_Books_Locations" FromRole="Books" ToRole="Locations" />
+          <NavigationProperty Name="Transactions" Relationship="Self.FK_Transactions_Books" FromRole="Books" ToRole="Transactions" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="LocationNo" />
+          </Key>
+          <Property Name="LocationNo" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LocationDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Books" Relationship="Self.FK_Books_Locations" FromRole="Locations" ToRole="Books" />
+        </EntityType>
+        <EntityType Name="MemberCategory">
+          <Key>
+            <PropertyRef Name="MemberCategory1" />
+          </Key>
+          <Property Name="MemberCategory1" Type="String" MaxLength="1" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BorrowLimit" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Members" Relationship="Self.FK_Members1_MemberCategories" FromRole="MemberCategories" ToRole="Members" />
+          <Property Name="BorrowedBooks" Type="Int16" Nullable="false" />
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="MemberID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IDNo" Type="String" MaxLength="9" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MemberCategory" Type="String" MaxLength="1" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PhoneNo" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TotalBorrowBooks" Type="Int16" Nullable="false" />
+          <Property Name="CurrentBorrowBooks" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="MemberCategory1" Relationship="Self.FK_Members1_MemberCategories" FromRole="Members" ToRole="MemberCategories" />
+          <NavigationProperty Name="Transactions" Relationship="Self.FK_Transactions_Members" FromRole="Members" ToRole="Transactions" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="StaffID" />
+          </Key>
+          <Property Name="StaffID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StaffName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StaffDesignation" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContactNo" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Transactions" Relationship="Self.FK_Transactions_Staff" FromRole="Staff" ToRole="Transactions" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="RecordID" />
+          </Key>
+          <Property Name="RecordID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="StaffID" Type="Int32" Nullable="false" />
+          <Property Name="BookID" Type="Int32" Nullable="false" />
+          <Property Name="BorrowDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DueDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ReturnDate" Type="DateTime" Precision="0" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Remarks" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Book" Relationship="Self.FK_Transactions_Books" FromRole="Transactions" ToRole="Books" />
+          <NavigationProperty Name="Member" Relationship="Self.FK_Transactions_Members" FromRole="Transactions" ToRole="Members" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_Transactions_Staff" FromRole="Transactions" ToRole="Staff" />
+        </EntityType>
+        <Association Name="FK_Books_Locations">
+          <End Role="Locations" Type="Self.Location" Multiplicity="1" />
+          <End Role="Books" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="LocationNo" />
+            </Principal>
+            <Dependent Role="Books">
+              <PropertyRef Name="LocationNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transactions_Books">
+          <End Role="Books" Type="Self.Book" Multiplicity="1" />
+          <End Role="Transactions" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Books">
+              <PropertyRef Name="BookID" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="BookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Members1_MemberCategories">
+          <End Role="MemberCategories" Type="Self.MemberCategory" Multiplicity="1" />
+          <End Role="Members" Type="Self.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberCategories">
+              <PropertyRef Name="MemberCategory1" />
+            </Principal>
+            <Dependent Role="Members">
+              <PropertyRef Name="MemberCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transactions_Members">
+          <End Role="Members" Type="Self.Member" Multiplicity="1" />
+          <End Role="Transactions" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transactions_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="Transactions" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="StaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LibraryEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Books" EntityType="Self.Book" />
+          <EntitySet Name="Locations" EntityType="Self.Location" />
+          <EntitySet Name="MemberCategories" EntityType="Self.MemberCategory" />
+          <EntitySet Name="Members" EntityType="Self.Member" />
+          <EntitySet Name="Staffs" EntityType="Self.Staff" />
+          <EntitySet Name="Transactions" EntityType="Self.Transaction" />
+          <AssociationSet Name="FK_Books_Locations" Association="Self.FK_Books_Locations">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="Books" EntitySet="Books" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transactions_Books" Association="Self.FK_Transactions_Books">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Members1_MemberCategories" Association="Self.FK_Members1_MemberCategories">
+            <End Role="MemberCategories" EntitySet="MemberCategories" />
+            <End Role="Members" EntitySet="Members" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transactions_Members" Association="Self.FK_Transactions_Members">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transactions_Staff" Association="Self.FK_Transactions_Staff">
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+          <EntitySet Name="ReceiptView" EntityType="SA47Team07ALibraryModel.ReceiptView" />
+          <EntitySet Name="MemberListView" EntityType="SA47Team07ALibraryModel.MemberListView" />
+          <EntitySet Name="ListOfBooksOnLoan" EntityType="SA47Team07ALibraryModel.ListOfBooksOnLoan" />
+          <EntitySet Name="ManagementView" EntityType="SA47Team07ALibraryModel.ManagementView" />
+        </EntityContainer>
+        <EntityType Name="ReceiptView">
+          <Key>
+            <PropertyRef Name="BookID" />
+            <PropertyRef Name="MemberName" />
+            <PropertyRef Name="RecordID" />
+            <PropertyRef Name="MemberID" />
+            <PropertyRef Name="BookName" />
+            <PropertyRef Name="BorrowDate" />
+            <PropertyRef Name="DueDate" />
+            <PropertyRef Name="CategoryName" />
+            <PropertyRef Name="MemberCategory" />
+            <PropertyRef Name="Status" />
+            <PropertyRef Name="ReturnDate" />
+          </Key>
+          <Property Name="BookID" Type="Int32" Nullable="false" />
+          <Property Name="MemberName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RecordID" Type="Int32" Nullable="false" />
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="BookName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BorrowDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DueDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="MemberCategory" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="ReturnDate" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="MemberListView">
+          <Key>
+            <PropertyRef Name="MemberID" />
+            <PropertyRef Name="MemberName" />
+            <PropertyRef Name="MemberCategory" />
+            <PropertyRef Name="CategoryName" />
+            <PropertyRef Name="TotalBorrowBooks" />
+            <PropertyRef Name="CurrentBorrowBooks" />
+          </Key>
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="MemberName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MemberCategory" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="TotalBorrowBooks" Type="Int16" Nullable="false" />
+          <Property Name="CurrentBorrowBooks" Type="Int16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ListOfBooksOnLoan">
+          <Key>
+            <PropertyRef Name="BookID" />
+            <PropertyRef Name="BookName" />
+            <PropertyRef Name="MemberID" />
+            <PropertyRef Name="MemberName" />
+            <PropertyRef Name="RecordID" />
+            <PropertyRef Name="BorrowDate" />
+            <PropertyRef Name="DueDate" />
+            <PropertyRef Name="Status" />
+          </Key>
+          <Property Name="BookID" Type="Int32" Nullable="false" />
+          <Property Name="BookName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="MemberName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RecordID" Type="Int32" Nullable="false" />
+          <Property Name="BorrowDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DueDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ManagementView">
+          <Key>
+            <PropertyRef Name="BookID" />
+            <PropertyRef Name="BookName" />
+            <PropertyRef Name="RecordID" />
+            <PropertyRef Name="Status" />
+          </Key>
+          <Property Name="BookID" Type="Int32" Nullable="false" />
+          <Property Name="BookName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RecordID" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SA47Team07ALibraryModelStoreContainer" CdmEntityContainer="LibraryEntities">
+          <EntitySetMapping Name="Books">
+            <EntityTypeMapping TypeName="SA47Team07ALibraryModel.Book">
+              <MappingFragment StoreEntitySet="Books">
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
+                <ScalarProperty Name="BookName" ColumnName="BookName" />
+                <ScalarProperty Name="Publisher" ColumnName="Publisher" />
+                <ScalarProperty Name="YearOfPublication" ColumnName="YearOfPublication" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Language" ColumnName="Language" />
+                <ScalarProperty Name="BookType" ColumnName="BookType" />
+                <ScalarProperty Name="Genre" ColumnName="Genre" />
+                <ScalarProperty Name="LocationNo" ColumnName="LocationNo" />
+                <ScalarProperty Name="TotalStock" ColumnName="TotalStock" />
+                <ScalarProperty Name="NoOfBorrowBooks" ColumnName="NoOfBorrowBooks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="SA47Team07ALibraryModel.Location">
+              <MappingFragment StoreEntitySet="Locations">
+                <ScalarProperty Name="LocationNo" ColumnName="LocationNo" />
+                <ScalarProperty Name="LocationDescription" ColumnName="LocationDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MemberCategories">
+            <EntityTypeMapping TypeName="SA47Team07ALibraryModel.MemberCategory">
+              <MappingFragment StoreEntitySet="MemberCategories">
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="BorrowedBooks" ColumnName="BorrowedBooks" />
+                <ScalarProperty Name="MemberCategory1" ColumnName="MemberCategory" />
+                <ScalarProperty Name="BorrowLimit" ColumnName="BorrowLimit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Members">
+            <EntityTypeMapping TypeName="SA47Team07ALibraryModel.Member">
+              <MappingFragment StoreEntitySet="Members">
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="MemberName" ColumnName="MemberName" />
+                <ScalarProperty Name="IDNo" ColumnName="IDNo" />
+                <ScalarProperty Name="MemberCategory" ColumnName="MemberCategory" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="TotalBorrowBooks" ColumnName="TotalBorrowBooks" />
+                <ScalarProperty Name="CurrentBorrowBooks" ColumnName="CurrentBorrowBooks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Staffs">
+            <EntityTypeMapping TypeName="SA47Team07ALibraryModel.Staff">
+              <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+                <ScalarProperty Name="StaffName" ColumnName="StaffName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="StaffDesignation" ColumnName="StaffDesignation" />
+                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transactions">
+            <EntityTypeMapping TypeName="SA47Team07ALibraryModel.Transaction">
+              <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
+                <ScalarProperty Name="BorrowDate" ColumnName="BorrowDate" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="ReturnDate" ColumnName="ReturnDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReceiptView">
+            <EntityTypeMapping TypeName="SA47Team07ALibraryModel.ReceiptView">
+              <MappingFragment StoreEntitySet="ReceiptView">
+                <ScalarProperty Name="ReturnDate" ColumnName="ReturnDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="MemberCategory" ColumnName="MemberCategory" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="BorrowDate" ColumnName="BorrowDate" />
+                <ScalarProperty Name="BookName" ColumnName="BookName" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
+                <ScalarProperty Name="MemberName" ColumnName="MemberName" />
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MemberListView">
+            <EntityTypeMapping TypeName="SA47Team07ALibraryModel.MemberListView">
+              <MappingFragment StoreEntitySet="MemberListView">
+                <ScalarProperty Name="CurrentBorrowBooks" ColumnName="CurrentBorrowBooks" />
+                <ScalarProperty Name="TotalBorrowBooks" ColumnName="TotalBorrowBooks" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="MemberCategory" ColumnName="MemberCategory" />
+                <ScalarProperty Name="MemberName" ColumnName="MemberName" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ListOfBooksOnLoan">
+            <EntityTypeMapping TypeName="SA47Team07ALibraryModel.ListOfBooksOnLoan">
+              <MappingFragment StoreEntitySet="ListOfBooksOnLoan">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="BorrowDate" ColumnName="BorrowDate" />
+                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
+                <ScalarProperty Name="MemberName" ColumnName="MemberName" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="BookName" ColumnName="BookName" />
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ManagementView">
+            <EntityTypeMapping TypeName="SA47Team07ALibraryModel.ManagementView">
+              <MappingFragment StoreEntitySet="ManagementView">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
+                <ScalarProperty Name="BookName" ColumnName="BookName" />
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

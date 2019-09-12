@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SA47Team07ALibraryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Books">
+    <Key>
+      <PropertyRef Name="BookID" />
+    </Key>
+    <Property Name="BookID" Type="int" Nullable="false" />
+    <Property Name="BookName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Publisher" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="YearOfPublication" Type="date" Nullable="false" />
+    <Property Name="Author" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Language" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="BookType" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Genre" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="LocationNo" Type="nvarchar" MaxLength="4" Nullable="false" />
+    <Property Name="TotalStock" Type="smallint" Nullable="false" />
+    <Property Name="NoOfBorrowBooks" Type="smallint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Locations">
+    <Key>
+      <PropertyRef Name="LocationNo" />
+    </Key>
+    <Property Name="LocationNo" Type="nvarchar" MaxLength="4" Nullable="false" />
+    <Property Name="LocationDescription" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MemberCategories">
+    <Key>
+      <PropertyRef Name="MemberCategory" />
+    </Key>
+    <Property Name="MemberCategory" Type="nchar" MaxLength="1" Nullable="false" />
+    <Property Name="BorrowLimit" Type="smallint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Members">
+    <Key>
+      <PropertyRef Name="MemberID" />
+    </Key>
+    <Property Name="MemberID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MemberName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="IDNo" Type="nvarchar" MaxLength="9" Nullable="false" />
+    <Property Name="MemberCategory" Type="nchar" MaxLength="1" Nullable="false" />
+    <Property Name="DateOfBirth" Type="date" Nullable="false" />
+    <Property Name="PhoneNo" Type="nvarchar" MaxLength="8" Nullable="false" />
+    <Property Name="Address" Type="nvarchar" MaxLength="100" />
+    <Property Name="Email" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="TotalBorrowBooks" Type="smallint" Nullable="false" />
+    <Property Name="CurrentBorrowBooks" Type="smallint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Staff">
+    <Key>
+      <PropertyRef Name="StaffID" />
+    </Key>
+    <Property Name="StaffID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StaffName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="StaffDesignation" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="ContactNo" Type="nvarchar" MaxLength="8" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Transactions">
+    <Key>
+      <PropertyRef Name="RecordID" />
+    </Key>
+    <Property Name="RecordID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MemberID" Type="int" Nullable="false" />
+    <Property Name="StaffID" Type="int" Nullable="false" />
+    <Property Name="BookID" Type="int" Nullable="false" />
+    <Property Name="BorrowDate" Type="date" Nullable="false" />
+    <Property Name="DueDate" Type="date" Nullable="false" />
+    <Property Name="ReturnDate" Type="date" Nullable="false" />
+    <Property Name="Status" Type="nvarchar" MaxLength="3" Nullable="false" />
+    <Property Name="Remarks" Type="nvarchar" MaxLength="300" />
+  </EntityType>
+  <Association Name="FK_Books_Locations">
+    <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
+    <End Role="Books" Type="Self.Books" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Locations">
+        <PropertyRef Name="LocationNo" />
+      </Principal>
+      <Dependent Role="Books">
+        <PropertyRef Name="LocationNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Members1_MemberCategories">
+    <End Role="MemberCategories" Type="Self.MemberCategories" Multiplicity="1" />
+    <End Role="Members" Type="Self.Members" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MemberCategories">
+        <PropertyRef Name="MemberCategory" />
+      </Principal>
+      <Dependent Role="Members">
+        <PropertyRef Name="MemberCategory" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transactions_Books">
+    <End Role="Books" Type="Self.Books" Multiplicity="1" />
+    <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Books">
+        <PropertyRef Name="BookID" />
+      </Principal>
+      <Dependent Role="Transactions">
+        <PropertyRef Name="BookID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transactions_Members">
+    <End Role="Members" Type="Self.Members" Multiplicity="1" />
+    <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Members">
+        <PropertyRef Name="MemberID" />
+      </Principal>
+      <Dependent Role="Transactions">
+        <PropertyRef Name="MemberID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Transactions_Staff">
+    <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+    <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staff">
+        <PropertyRef Name="StaffID" />
+      </Principal>
+      <Dependent Role="Transactions">
+        <PropertyRef Name="StaffID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SA47Team07ALibraryModelStoreContainer">
+    <EntitySet Name="Books" EntityType="Self.Books" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MemberCategories" EntityType="Self.MemberCategories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Members" EntityType="Self.Members" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Books_Locations" Association="Self.FK_Books_Locations">
+      <End Role="Locations" EntitySet="Locations" />
+      <End Role="Books" EntitySet="Books" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Members1_MemberCategories" Association="Self.FK_Members1_MemberCategories">
+      <End Role="MemberCategories" EntitySet="MemberCategories" />
+      <End Role="Members" EntitySet="Members" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transactions_Books" Association="Self.FK_Transactions_Books">
+      <End Role="Books" EntitySet="Books" />
+      <End Role="Transactions" EntitySet="Transactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transactions_Members" Association="Self.FK_Transactions_Members">
+      <End Role="Members" EntitySet="Members" />
+      <End Role="Transactions" EntitySet="Transactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Transactions_Staff" Association="Self.FK_Transactions_Staff">
+      <End Role="Staff" EntitySet="Staff" />
+      <End Role="Transactions" EntitySet="Transactions" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
